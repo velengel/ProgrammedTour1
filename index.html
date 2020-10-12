@@ -1,0 +1,112 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>加速度センサてすと</title>
+</head>
+
+<body>
+  <h1>命令形人生体験ツアー</h1><br>
+  <div style="margin-left:10%;margin-right:10%;">
+    <button onClick="deviceMotionRequest()" style="width:100%;padding:10px;font-size:20px;">加速度センサ許可😊</button>
+  </div>
+
+  <h2><div id="instruction"></div></h2>
+
+  <font size=7>
+    
+    <br>
+    <div id="txt">ここにデータを表示</div>
+
+  </font>
+
+
+  <script>
+    var aX = 0, aY = 0, aZ = 0;
+    var index=0, As=[];
+    As.length=100;
+    var A = 0;
+    var phase = 0;
+
+    function deviceMotionRequest() {
+      if (DeviceMotionEvent.requestPermission) {
+        DeviceMotionEvent.requestPermission()
+          .then(permissionState => {
+            if (permissionState === 'granted') {
+              window.addEventListener("devicemotion", function (event) {
+                if (!event.accelerationIncludingGravity) {
+                  alert('event.accelerationIncludingGravity is null');
+                  return;
+                }
+                aX = event.accelerationIncludingGravity.x.toFixed(2);
+                aY = event.accelerationIncludingGravity.y.toFixed(2);
+                aZ = event.accelerationIncludingGravity.z.toFixed(2);
+                A = Math.sqrt(aX*aX+aY*aY+aZ*aZ).toFixed(2)
+              })
+            }
+          })
+          .catch(console.error);
+      } else {
+        alert('DeviceMotionEvent.requestPermission is not found')
+      }
+    }
+
+    var timer = window.setInterval(() => {
+      displayData();      // displayData 関数を実行
+      displayInstruction();
+    }, 100); // 33msごとに（1秒間に約30回）
+
+    function displayData() {
+      var txt = document.getElementById("txt");   
+      /* txt.innerHTML = "x: " + aX + "<br>"         
+        + "y: " + aY + "<br>"         
+        + "z: " + aZ + "<br>"
+        + "A: " + A; //*/
+
+      
+      
+      //直前の値を保存
+      index++;
+      As[index%100]=A;
+      index%=100;
+
+      //プログラムされていた判定
+      var dif = A-As[(index-1)%100];
+      if(index > 30 && dif<-2 && phase == 0 && Math.abs(As[(index-1)%100])>1){
+        alert("あなたにプログラムされていた内容:\n  もし座っていたら、立ち上がる。");
+        phase = 1;
+        index=0;
+        As=[];
+      }
+
+      if(index > 30 && dif<-2 && phase == 1){
+        alert("あなたにプログラムされていた内容:\n  もし壁に当たりそうになったら、立ち止まる。");
+        phase = 2;
+        index=0;
+        As=[];
+      }
+    }
+
+    function displayInstruction() {
+      var inst = document.getElementById("instruction");
+      switch(phase){
+        case 0:
+          inst.innerHTML = "命令：立ち上がってください。";
+          txt.innerHTML = '<img src="./img/standup.png" width = 50% />'
+          break;
+        case 1:
+          inst.innerHTML = "命令：壁に向かって歩いてください。"
+          txt.innerHTML = '<img src="./img/walk.png" width = 50% />'
+          break;
+        case 2:
+          inst.innerHTML="命令：椅子に座ってください。"
+          txt.innerHTML = '<img src="./img/sitdown.png" width = 50% />'
+          break;
+      }
+             
+    }
+  </script>
+</body>
+
+</html>
