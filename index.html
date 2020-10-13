@@ -7,17 +7,17 @@
 </head>
 
 <body>
-  <h1>命令形人生体験ツアー</h1><br>
+  <h1>手続き型人生体験ツアー</h1><br>
   <div style="margin-left:10%;margin-right:10%;">
     <button onClick="deviceMotionRequest()" style="width:100%;padding:10px;font-size:20px;">加速度センサ許可😊</button>
   </div>
 
   <h2><div id="instruction"></div></h2>
 
-  <font size=7>
+  <font size=3>
     
     <br>
-    <div id="txt">ここにデータを表示</div>
+    <div id="txt">これからあなたにいくつかの命令をするので、スマホを持ったままその通りに動いてみてください。<br>その後、あなたにプログラムされていた内容が表示されます。</div>
 
   </font>
 
@@ -27,7 +27,7 @@
     var index=0, As=[];
     As.length=100;
     var A = 0;
-    var phase = 0;
+    var phase = -1;
 
     function deviceMotionRequest() {
       if (DeviceMotionEvent.requestPermission) {
@@ -50,6 +50,7 @@
       } else {
         alert('DeviceMotionEvent.requestPermission is not found')
       }
+      phase = 0;
     }
 
     var timer = window.setInterval(() => {
@@ -73,7 +74,7 @@
 
       //プログラムされていた判定
       var dif = A-As[(index-1)%100];
-      if(index > 30 && dif<-2 && phase == 0 && Math.abs(As[(index-1)%100])>1){
+      if(index > 30 && dif<-3 && phase == 0 && Math.abs(As[(index-1)%100])>1){
         alert("あなたにプログラムされていた内容:\n  もし座っていたら、立ち上がる。");
         phase = 1;
         index=0;
@@ -86,11 +87,21 @@
         index=0;
         As=[];
       }
+
+      if(index > 30 && dif>3 && phase == 2){
+        alert("あなたにプログラムされていた内容:\n椅子を探す。\n椅子に向かって歩く。\n向きを変える。\n椅子に座る。\n日々の行動に条件分岐がないか考える。");
+        phase = 3;
+        index=0;
+        As=[];
+      }
     }
 
     function displayInstruction() {
       var inst = document.getElementById("instruction");
       switch(phase){
+        case -1:
+          inst.innerHTML = "命令：加速度センサの許可　を押してスタート";
+          break;
         case 0:
           inst.innerHTML = "命令：立ち上がってください。";
           txt.innerHTML = '<img src="./img/standup.png" width = 50% />'
@@ -102,6 +113,10 @@
         case 2:
           inst.innerHTML="命令：椅子に座ってください。"
           txt.innerHTML = '<img src="./img/sitdown.png" width = 50% />'
+          break;
+        case 3:
+          inst.innerHTML = "おつかれさまでした。";
+          txt.innerHTML = '日常の行動の中で無意識に判断している条件に気づいてもらえたでしょうか？'
           break;
       }
              
