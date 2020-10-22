@@ -8,31 +8,30 @@
 
 <body>
 
-  <div style="text-align: center;">
+  <div style="text-align: center;padding: 5px; margin-bottom: 5px; border: 5px double #333333; border-radius: 10px;">
   
     <h1>
       手続き型人生<br>体験ツアー1
     </h1>
   </div>
   
-  <pre>
-
+  
+  <div style="padding: 10px 10px 10px 10px;width: auto;">
     <label for="progress">Phase:</label> <progress id="progress" min=-1 max=4 value=-1></progress>
-
-  </pre>
+  </div>
     
-  <div style="margin-left:10%;margin-right:10%;padding-bottom:50px">
+
+  
+    
+  <div style="margin-left:10%;margin-right:10%;">
     
     <button onClick="deviceMotionRequest()" style="width:100%;padding:10px;font-size:20px;">加速度センサ許可😊</button>
   </div>
 
-
-
-  <pre>
+  <div style="padding: 30px 10px 10px 10px;">
     <label for="acc">Acc Level:</label> <meter id="acc" min=5 max=20 low=5 high=13 optinum=8 value=0></meter>
-  
-  </pre>
-  
+  </div>
+
   <h2>
     <div id="instruction"></div>
   </h2>
@@ -40,7 +39,7 @@
   <font size=3>
 
     <br>
-    <div id="txt">これからあなたにいくつかの命令をするので、スマホを持ったままその通りに動いてみてください。<br>その後、あなたにプログラムされていた内容が表示されます。</div>
+    <div id="txt">これからあなたにいくつかの命令をするので、<br>スマホを持ったままその通りに動いてみてください。<br>その後、あなたにプログラムされていた内容が表示されます。</div>
 
   </font>
 
