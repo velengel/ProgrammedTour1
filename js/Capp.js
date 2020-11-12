@@ -15,7 +15,7 @@ function deviceMotionRequest() {
         DeviceMotionEvent.requestPermission()
             .then(permissionState => {
                 if (permissionState === 'granted') {
-                    window.addEventListener("devicemotion", function(event) {
+                    window.addEventListener("devicemotion", function (event) {
                         if (!event.accelerationIncludingGravity) {
                             alert('event.accelerationIncludingGravity is null');
                             return;
@@ -117,22 +117,25 @@ function displayData() {
     //プログラムされていた判定
     var dif = A - As[(index - 1) % 100];
     if (index > 30 && dif < -3 && phase == 0 && Math.abs(As[(index - 1) % 100]) > 1) {
-        alert("あなたにプログラムされていた内容:\n  「もし座っていたら、」立ち上がる。");
-        phase = 1;
+        //alert("あなたにプログラムされていた内容:\n  「もし座っていたら、」立ち上がる。");
+        createMordalWindow(phase);
+        //phase = 1;
         index = 0;
         As = [];
     }
 
     if (index > 30 && dif < -2 && phase == 1) {
-        alert("あなたにプログラムされていた内容:\n  「もし壁に当たりそうになったら、」立ち止まる。");
-        phase = 2;
+        //alert("あなたにプログラムされていた内容:\n  「もし壁に当たりそうになったら、」立ち止まる。");
+        //phase = 2;
+        createMordalWindow(phase);
         index = 0;
         As = [];
     }
 
     if (index > 30 && dif > 3 && phase == 2) {
-        alert("あなたにプログラムされていた内容:\n椅子を探す。\n椅子に向かって歩く。\n向きを変える。\n椅子に座る。\n日々の行動に条件分岐がないか考える。");
-        phase = 3;
+        //alert("あなたにプログラムされていた内容:\n椅子を探す。\n椅子に向かって歩く。\n向きを変える。\n椅子に座る。\n日々の行動に条件分岐がないか考える。");
+        //phase = 3;
+        createMordalWindow(phase);
         index = 0;
         As = [];
     }
@@ -167,37 +170,45 @@ function displayInstruction() {
         case 3:
             count = 200;
             inst.innerHTML = "おつかれさまでした。";
-            txt.style.display = "block";
-            txt.innerHTML = `日常の行動の中で
-            <ul>
-                <li>無意識に判断している条件</li>
-                <li>意識していない動作</li>
-            </ul>
-            に気づいてもらえたでしょうか？<br><br>`;
-            var expression = `
-            
-命令１：立ち上がってください。<br>
-→ <b>もし座っていたら、</b>立ち上がる。<br>
-<ul class="box-list">
-<img src="../img/sitdown.png"><img src="../img/RightArrow.png"><img src="../img/standup.png">
-</ul>
-<br>命令２：壁に向かって歩いてください。<br>
-→ <b>もし壁に当たりそうになったら、</b>立ち止まる。<br>
-<div id="walkimage">
-<img src="../img/walk2.png">
-</div>
-<br>命令３：椅子に座ってください。<br>
-→ 椅子を探す。<br>
-椅子に向かって歩く。<br>
-向きを変える。<br>
-椅子に座る。<br>
-<b>日々の行動に条件分岐がないか考える。</b><br>
-<ul class="box-list">
-<img src="../img/walk1.png"><img src="../img/sitdown.png"><img src="../img/thinking.png">
-</ul>
+            var all = document.getElementById("all");
+            all.style.display = "none";
+            var program = document.getElementById("program");
+            var programText = `
+おつかれさまでした。<br>
+あなたにプログラムされていた内容は以下になります。<br>
+<b>無意識にやっている動作</b>や、<b>条件分岐</b>に気づけましたか？<br>
 
-`
-            txt.innerHTML += expression;
+<pre><code class="language-Python">
+//あなたの人生のライブラリをimport
+import YourBehavior
+
+
+def main():
+    //命令１：立ち上がってください。
+    //もし座っていたら、立ち上がる。
+    if(isSitting == True){
+        StandUp()
+    }
+    //命令２：壁に向かって歩いてください。
+    //もし壁に当たりそうになったら、立ち止まる。
+    if(isAboutToHit(wall) == True){
+        Stop()
+    }
+    //命令３：椅子に座ってください。
+    //椅子を探す
+    Object chair = Search();
+    //椅子に向かって歩く。
+    WalkTo(chair)
+    //向きを変える。
+    Turn()
+    //椅子に座る。
+    SitDown(chair)
+    //日々の行動に条件分岐がないか考える。
+    Think(conditionalBranch)
+</code></pre>
+`;
+            
+            program.innerHTML = programText;
             img.style.display = "none";
             phase++;
             break;
@@ -205,7 +216,7 @@ function displayInstruction() {
 
 }
 
-$("#modal-open").click(
+/*$("#modal-open").click(
     function() {
         $(this).blur();
         if ($("#modal-overlay")[0]) return false;
@@ -219,7 +230,57 @@ $("#modal-open").click(
         });
     }
 
-);
+);*/
+
+function createMordalWindow(phaseNumber) {
+    $(this).blur();
+    if ($("#modal-overlay")[0]) return false;
+    $("body").append('<div id="modal-overlay"></div>');
+    centeringModalSyncer();
+    $("#modal-overlay").fadeIn("slow");
+    $("#modal-content").fadeIn("slow");
+    switch (phaseNumber) {
+        case 0:
+            var programText = `<b>あなたにプログラムされていた内容：</b><br>
+            <pre>
+//もし座っていたら、立ち上がる。<br>
+if(isSitting == True){<br>
+  StandUp()<br>
+}</pre>`
+            $("#ProgramText").html(programText);
+            break;
+        case 1:
+            var programText = `<b>あなたにプログラムされていた内容：</b><br>
+            <pre>
+//もし壁に当たりそうになったら、立ち止まる。<br>
+if(isAboutToHit(wall) == True){<br>
+  Stop()<br>
+}</pre>`
+            $("#ProgramText").html(programText);
+            break;
+        case 2:
+            var programText = `<b>あなたにプログラムされていた内容：</b><br>
+                <pre>
+//椅子を探す
+Object chair = Search()
+//椅子に向かって歩く。
+WalkTo(chair)
+//向きを変える。
+Turn()
+//椅子に座る。
+SitDown(chair)
+//日々の行動に条件分岐がないか考える。
+Think(conditionalBranch)
+</pre>`
+            $("#ProgramText").html(programText);
+            break;
+    }
+    $("#modal-overlay,#modal-close").unbind().click(function () {
+        $("#modal-overlay").remove();
+        $("#modal-content").css({ "display": "none" });
+        phase++;
+    });
+}
 
 function centeringModalSyncer() {
     var w = $(window).width();
