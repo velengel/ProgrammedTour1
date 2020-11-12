@@ -243,18 +243,18 @@ function createMordalWindow(phaseNumber) {
         case 0:
             var programText = `<b>あなたにプログラムされていた内容：</b><br>
             <pre>
-//もし座っていたら、立ち上がる。<br>
-if(isSitting == True){<br>
-  StandUp()<br>
+//もし座っていたら、立ち上がる。
+if(isSitting == True){
+  StandUp()
 }</pre>`
             $("#ProgramText").html(programText);
             break;
         case 1:
             var programText = `<b>あなたにプログラムされていた内容：</b><br>
             <pre>
-//もし壁に当たりそうになったら、立ち止まる。<br>
-if(isAboutToHit(wall) == True){<br>
-  Stop()<br>
+//もし壁に当たりそうになったら、立ち止まる。
+if(isAboutToHit(wall) == True){
+  Stop()
 }</pre>`
             $("#ProgramText").html(programText);
             break;
