@@ -15,7 +15,7 @@ function deviceMotionRequest() {
         DeviceMotionEvent.requestPermission()
             .then(permissionState => {
                 if (permissionState === 'granted') {
-                    window.addEventListener("devicemotion", function (event) {
+                    window.addEventListener("devicemotion", function(event) {
                         if (!event.accelerationIncludingGravity) {
                             alert('event.accelerationIncludingGravity is null');
                             return;
@@ -116,7 +116,7 @@ function displayData() {
 
     //プログラムされていた判定
     var dif = A - As[(index - 1) % 100];
-    if (index > 30 && dif < -3 && phase == 0 && Math.abs(As[(index - 1) % 100]) > 1) {
+    if (index > 30 && dif < -2 && phase == 0 && Math.abs(As[(index - 1) % 100]) > 1) {
         //alert("あなたにプログラムされていた内容:\n  「もし座っていたら、」立ち上がる。");
         createMordalWindow(phase);
         //phase = 1;
@@ -179,35 +179,33 @@ function displayInstruction() {
 <b>無意識にやっている動作</b>や、<b>条件分岐</b>に気づけましたか？<br>
 
 <pre><code class="language-Python">
-//あなたの人生のライブラリをimport
+# あなたの人生のライブラリをimport
 import YourBehavior
 
 
 def main():
-    //命令１：立ち上がってください。
-    //もし座っていたら、立ち上がる。
-    if(isSitting == True){
+    # 命令１：立ち上がってください。
+    # もし座っていたら、立ち上がる。
+    if isSitting == True :
         StandUp()
-    }
-    //命令２：壁に向かって歩いてください。
-    //もし壁に当たりそうになったら、立ち止まる。
-    if(isAboutToHit(wall) == True){
+    # 命令２：壁に向かって歩いてください。
+    # もし壁に当たりそうになったら、立ち止まる。
+    if isAboutToHit(wall) == True :
         Stop()
-    }
-    //命令３：椅子に座ってください。
-    //椅子を探す
-    Object chair = Search();
-    //椅子に向かって歩く。
+    # 命令３：椅子に座ってください。
+    # 椅子を探す
+    chair : Object = Search()
+    # 椅子に向かって歩く。
     WalkTo(chair)
-    //向きを変える。
+    # 向きを変える。
     Turn()
-    //椅子に座る。
+    # 椅子に座る。
     SitDown(chair)
-    //日々の行動に条件分岐がないか考える。
+    # 日々の行動に条件分岐がないか考える。
     Think(conditionalBranch)
 </code></pre>
 `;
-            
+
             program.innerHTML = programText;
             img.style.display = "none";
             phase++;
@@ -243,39 +241,39 @@ function createMordalWindow(phaseNumber) {
         case 0:
             var programText = `<b>あなたにプログラムされていた内容：</b><br>
             <pre>
-//もし座っていたら、立ち上がる。
-if(isSitting == True){
+# もし座っていたら、立ち上がる。
+if isSitting == True :
   StandUp()
-}</pre>`
+</pre>`
             $("#ProgramText").html(programText);
             break;
         case 1:
             var programText = `<b>あなたにプログラムされていた内容：</b><br>
             <pre>
-//もし壁に当たりそうになったら、立ち止まる。
-if(isAboutToHit(wall) == True){
+# もし壁に当たりそうになったら、立ち止まる。
+if isAboutToHit(wall) == True :
   Stop()
-}</pre>`
+</pre>`
             $("#ProgramText").html(programText);
             break;
         case 2:
             var programText = `<b>あなたにプログラムされていた内容：</b><br>
                 <pre>
-//椅子を探す
-Object chair = Search()
-//椅子に向かって歩く。
+# 椅子を探す
+chair : Object = Search()
+# 椅子に向かって歩く。
 WalkTo(chair)
-//向きを変える。
+# 向きを変える。
 Turn()
-//椅子に座る。
+# 椅子に座る。
 SitDown(chair)
-//日々の行動に条件分岐がないか考える。
+# 日々の行動に条件分岐がないか考える。
 Think(conditionalBranch)
 </pre>`
             $("#ProgramText").html(programText);
             break;
     }
-    $("#modal-overlay,#modal-close").unbind().click(function () {
+    $("#modal-overlay,#modal-close").unbind().click(function() {
         $("#modal-overlay").remove();
         $("#modal-content").css({ "display": "none" });
         phase++;

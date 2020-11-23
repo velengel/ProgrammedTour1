@@ -116,7 +116,7 @@ function displayData() {
 
     //プログラムされていた判定
     var dif = A - As[(index - 1) % 100];
-    if (index > 30 && dif < -3 && phase == 0 && Math.abs(As[(index - 1) % 100]) > 1) {
+    if (index > 30 && dif < -2 && phase == 0 && Math.abs(As[(index - 1) % 100]) > 1) {
         alert("あなたにプログラムされていた内容:\n  「もし座っていたら、」立ち上がる。");
         phase = 1;
         index = 0;
