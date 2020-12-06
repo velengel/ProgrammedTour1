@@ -32,7 +32,7 @@ function deviceMotionRequest() {
         alert('DeviceMotionEvent.requestPermission is not found');
     }
     var accbutton = document.getElementById("Button");
-    accbutton.style.display="none";
+    accbutton.style.display = "none";
     phase = 0;
 }
 
@@ -118,7 +118,7 @@ function displayData() {
 
     //プログラムされていた判定
     var dif = A - As[(index - 1) % 100];
-    if (index > 30 && dif < -2 && phase == 0 && Math.abs(As[(index - 1) % 100]) > 1) {
+    if (index > 30 && dif < -1.3 && phase == 0 && Math.abs(As[(index - 1) % 100]) > 1) {
         //alert("あなたにプログラムされていた内容:\n  「もし座っていたら、」立ち上がる。");
         createMordalWindow(phase);
         //phase = 1;
