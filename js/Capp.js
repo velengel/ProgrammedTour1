@@ -31,6 +31,8 @@ function deviceMotionRequest() {
     } else {
         alert('DeviceMotionEvent.requestPermission is not found');
     }
+    var accbutton = document.getElementById("Button");
+    accbutton.style.display="none";
     phase = 0;
 }
 
@@ -154,16 +156,16 @@ function displayInstruction() {
             break;
         case 0:
             txt.style.display = "none";
-            inst.innerHTML = "命令１：立ち上がってください。";
+            inst.innerHTML = "命令１：<br>立ち上がってください。";
             img.innerHTML = '<img src="../img/standup.png" width = 30% />'
             break;
         case 1:
-            inst.innerHTML = "命令２：壁に向かって歩いてください。"
+            inst.innerHTML = "命令２：<br>壁に向かって歩いてください。"
 
             img.innerHTML = '<img src="../img/walk1.png" width = 30% />'
             break;
         case 2:
-            inst.innerHTML = "命令３：椅子に座ってください。"
+            inst.innerHTML = "命令３：<br>椅子に座ってください。"
             img.style.left = 0 + "px";
             img.innerHTML = '<img src="../img/sitdown.png" width = 30% />'
             break;
@@ -273,7 +275,7 @@ Think(conditionalBranch)
             $("#ProgramText").html(programText);
             break;
     }
-    $("#modal-overlay,#modal-close").unbind().click(function() {
+    $("#modal-close").unbind().click(function() {
         $("#modal-overlay").remove();
         $("#modal-content").css({ "display": "none" });
         phase++;

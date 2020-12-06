@@ -16,7 +16,9 @@
     margin-right: 10%;
 }
 
-#AccMeter {
+
+
+#Button {
     padding: 30px 10px 10px 10px;
 }
 
@@ -105,3 +107,4 @@ pre {
     white-space: pre-wrap;
     /* はみ出たときに折り返す */
 }
+
