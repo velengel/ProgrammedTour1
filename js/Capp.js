@@ -188,7 +188,7 @@ import YourBehavior
 def main():
     # 命令１：立ち上がってください。
     # もし座っていたら、立ち上がる。
-    if isSitting == True :
+    if isSitting() == True :
         StandUp()
     # 命令２：壁に向かって歩いてください。
     # もし壁に当たりそうになったら、立ち止まる。
@@ -244,7 +244,7 @@ function createMordalWindow(phaseNumber) {
             var programText = `<b>あなたにプログラムされていた内容：</b><br>
             <pre>
 # もし座っていたら、立ち上がる。
-if isSitting == True :
+if isSitting() == True :
   StandUp()
 </pre>`
             $("#ProgramText").html(programText);
