@@ -134,7 +134,7 @@ function displayData() {
         As = [];
     }
 
-    if (index > 30 && dif > 3 && phase == 2) {
+    if (index > 30 && dif > 2.5 && phase == 2) {
         //alert("あなたにプログラムされていた内容:\n椅子を探す。\n椅子に向かって歩く。\n向きを変える。\n椅子に座る。\n日々の行動に条件分岐がないか考える。");
         //phase = 3;
         createMordalWindow(phase);
